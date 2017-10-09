@@ -19,10 +19,18 @@ def get_user_rating(input_dict):
     """
     user_restaurant = raw_input("Restaurant Name?: ")
     user_rating = ""
-    while not user_rating.isdigit() and not (0 < int(user_rating) < 6):
+    while True:
         user_rating = raw_input("Restaurant Rating?: ")
-    user_rating = int(user_rating)
-
+        try:
+            user_rating = int(user_rating)
+        except:
+            print "Please enter a number"
+            continue
+        if not (0 < user_rating < 6):
+            print "Please enter a number between 1 and 5"
+            continue
+        else:
+            break
     input_dict[user_restaurant] = user_rating
 
 
@@ -36,16 +44,16 @@ def print_dict_alphabetical(input_dict):
     # print alpha_restaurants
 
 
-add_new_rating = raw_input("Enter 'rating' to add new rating: ")
-print_restaurants_alphabetical = raw_input("Enter 'print' to print restaurants and ratings: ")
-user_quit = raw_input("Enter 'quit' to exit program: ")
-
-if add_new_rating == 'rating':
-    get_user_rating(ratings)
-elif print_restaurants_alphabetical == 'print':
-    print_dict_alphabetical(ratings)
-elif user_quit == 'quit':
-    break
+def get_user_choice():
+    while True:
+        user_input = raw_input("Enter 'rating', 'print, or 'quit': ")
+        if user_input == 'rating':
+            get_user_rating(ratings)
+        elif user_input == 'print':
+            print_dict_alphabetical(ratings)
+        elif user_input == 'quit':
+            break
 
 
 ratings = get_restaurant_ratings('scores.txt')
+get_user_choice()
